@@ -1,0 +1,138 @@
+CS550 P2P - STARTUP AND RESTART SEQUENCE
+Applies to the source in p2p_full.tar.gz reviewed September 28, 2026.
+
+ORDER
+1. VM3: start index.
+2. VM1: start Peer A.
+3. VM2: start Peer B.
+4. VM1 and VM2: register files.
+5. Search/download; then run benchmarks if needed.
+Leave the three service terminals open. Run client commands in extra terminals.
+
+A. FIRST CHECK EACH VM
+  hostname
+  hostname -I
+
+Recorded addresses:
+VM3 / index:  10.0.2.6:9000
+VM1 / peer_a: 10.0.2.5:9001
+VM2 / peer_b: 10.0.2.15:9002
+If addresses changed, update each peer's config.json and suite.json as needed.
+
+Enter the actual current project directory ON EACH VM:
+  cd /home/vboxuser/data/CS550/p2p
+If your files are still in the earlier directory instead, use:
+  cd /home/vboxuser/CS550/p2p
+Choose the directory holding your current code and config.json. Do not run both
+copies. Commands below assume you are already in the correct project directory.
+  pwd
+  ls server.py peer_server.py register.py config.json
+
+B. VERIFY PEER CONFIGURATION
+VM1 config.json:
+{
+  "index": {"host": "10.0.2.6", "port": 9000},
+  "peer": {
+    "id": "peer_a", "host": "10.0.2.5", "listen_host": "0.0.0.0",
+    "port": 9001, "shared_dir": "peer_a/shared"
+  }
+}
+VM2 config.json:
+{
+  "index": {"host": "10.0.2.6", "port": 9000},
+  "peer": {
+    "id": "peer_b", "host": "10.0.2.15", "listen_host": "0.0.0.0",
+    "port": 9002, "shared_dir": "peer_b/shared"
+  }
+}
+Inspect with: cat config.json
+Relative shared paths are relative to the configuration file location.
+
+C. START VM3 INDEX - TERMINAL 1
+For baseline performance tests / restart without automatic replication:
+  python3 -u server.py --host 0.0.0.0 --port 9000 --replication-factor 1
+Expected startup messages:
+  Index server listening on 0.0.0.0:9000
+  Replication factor: 1
+These are expected examples, not a newly captured VM transcript.
+Current server.py uses command-line options. DO NOT use:
+  python3 server.py --config index_config.json
+That older command is not supported by the current uploaded source.
+
+D. START VM1 PEER A - TERMINAL 1
+  mkdir -p peer_a/shared
+  python3 -u peer_server.py --config config.json
+Expected: peer_a listening on 0.0.0.0:9001.
+
+E. START VM2 PEER B - TERMINAL 1
+  mkdir -p peer_b/shared
+  python3 -u peer_server.py --config config.json
+Expected: peer_b listening on 0.0.0.0:9002.
+
+F. REGISTER BOTH PEERS - EXTRA TERMINALS
+VM1:
+  python3 register.py --config config.json --no-replicate
+VM2:
+  python3 register.py --config config.json --no-replicate
+This records existing files and peer addresses. It does not generate datasets.
+The --no-replicate option deliberately avoids creating extra copies.
+After any index restart, repeat registration on BOTH peers; index memory is empty.
+After staged files are deleted, restart the index and re-register surviving files
+because registration alone does not remove stale ownership records.
+
+G. QUICK SEARCH/DOWNLOAD CHECK
+Choose a filename that actually exists on VM1. For a small new demo, on VM1:
+  printf 'Hello from peer_a\n' > peer_a/shared/startup_demo_a.txt
+  python3 register.py --config config.json --no-replicate
+On VM2:
+  python3 search.py --config config.json --file startup_demo_a.txt
+  python3 download.py --config config.json --file startup_demo_a.txt --source-peer peer_a
+The download should print: display file 'startup_demo_a.txt'
+Check bytes on VM1:
+  sha256sum peer_a/shared/startup_demo_a.txt
+Check bytes on VM2:
+  sha256sum peer_b/shared/startup_demo_a.txt
+The hashes should match. An empty directory gives no search matches until files
+are added and registered; this is not itself a server failure.
+
+H. FACTOR-2 REPLICATION DEMO (SEPARATE FROM BASELINE)
+Use small demo directories/configurations or verify enough disk space first;
+normal registration can replicate ALL files in the configured shared directory.
+1. Stop only the old VM3 index with Ctrl+C in its terminal.
+2. Start it with:
+   python3 -u server.py --host 0.0.0.0 --port 9000 --replication-factor 2
+3. Keep both peer services running. Register membership on BOTH peers first:
+   python3 register.py --config config.json --no-replicate
+4. On VM1, then VM2, run normal registration:
+   python3 register.py --config config.json
+5. Query all owners from either peer:
+   python3 search.py --config config.json --file startup_demo_a.txt --all-owners
+6. Check copies on disk with sha256sum; do not rely solely on index records.
+Factor 2 means two total copies including the source. A bypass registration
+alone does not establish two copies. There is no automatic background repair.
+
+I. BEFORE AUTOMATED TESTS
+On VM1, inspect: cat suite.json
+Ensure local_project and remote.project match the actual current directories,
+remote SSH address is VM2, and the configured identity exists on VM1.
+Check unattended SSH (use your actual configured key):
+  ssh -i ~/.ssh/cs550_test -o BatchMode=yes vboxuser@10.0.2.15 hostname
+Keep all three P2P services running throughout the tests.
+The reduced staged command is:
+  python3 run_staged_tests.py --suite suite.json
+It generates 800 medium and 8 large files per peer in separate stages, verifies
+and deletes received copies, then removes its generated stage sources. It does
+not implement the full assignment dataset. See readme.txt before running it.
+
+J. IF STARTUP FAILS
+Inspect listeners:
+VM3: ss -ltnp | grep ':9000'
+VM1: ss -ltnp | grep ':9001'
+VM2: ss -ltnp | grep ':9002'
+Address already in use: an old service may still run. Identify it and use its
+terminal to stop it before replacing it; do not start a duplicate service.
+Connection refused: check the expected service, host and port.
+Timeout / No route to host: check VM power, NAT Network, addresses and firewall.
+Index is up but lookup empty: register files on both peers again.
+Old progress notes used index-on-VM1 commands. Use this three-VM guide for the
+current uploaded source, not the historical reconstructed chat commands.

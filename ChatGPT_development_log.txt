@@ -1,0 +1,155 @@
+CS550 PA#1 - CHATGPT-ASSISTED DEVELOPMENT LOG
+Prepared September 28, 2026
+
+SCOPE AND PROVENANCE
+This is a recovered development record, not a fabricated timesheet or a full
+verbatim ChatGPT export. Dates/hours are given only where evidence supports them.
+Student/team member: enter the actual CS550 submission name(s).
+All prose is English. Earlier prompts were sometimes Chinese; translated or
+summarized prompts are clearly separated from original-language excerpts.
+
+Sources:
+A. CS550_English_Chat.txt: saved September 26; explicitly an English reconstruction
+   of September 24-26 conversations, not an exhaustive prompt log.
+B. CS550_progress_restart.txt: September 26 progress summary, not full chat.
+C. Uploaded p2p_full.tar.gz: actual source/configuration and benchmark records.
+D. search_results_vbox2.tar.gz: complementary Peer B search results.
+E. Current documentation conversation and visible earlier conversation excerpts.
+Historical narrative from A is in docs/recovered_chat_history.txt. Its old source
+and startup instructions are superseded by the current uploaded code.
+
+1. DEVELOPMENT ACTIVITIES RECOVERED FROM CONVERSATIONS
+September 21-26 (exact active hours unavailable):
+- Reviewed and translated the assignment. Chose Python sockets/threads.
+- Started on one VM with separate ports and shared directories.
+- Built an echo client/server; added repeated accept and per-client threads.
+- Tested overlapping clients using a slow client and a normal client.
+- Added newline-delimited JSON registry and exact-match search.
+- Protected shared index structures with a lock; fixed indentation errors.
+- Added peer obtain service and binary chunked downloads.
+- Added lookup/source selection and download registration.
+- Generalized peer identity, address, port and shared directory.
+- Added batched registration, peer registry and a configurable replication factor.
+- Implemented replica pull and destination registration; checked SHA-256.
+- Tested text, binary and a large-file transfer according to saved chat records.
+- Migrated from localhost to two VMs. Investigated registration timeout and UFW.
+- Verified bidirectional transfer and factor-2 replication across the two VMs.
+- Saved project progress and a reconstructed English conversation record.
+These are recovered stages, not independently verified hour-by-hour entries.
+
+September 26-28 (exact implementation hours unavailable):
+- Moved toward three-VM deployment, with index at 10.0.2.6.
+- Configured peers at 10.0.2.5:9001 and 10.0.2.15:9002.
+- Used per-peer JSON configuration and automated benchmark programs.
+- Ran single/concurrent search and small-file transfer experiments.
+- Addressed limited disk capacity with staged medium/large experiments.
+- Requested 800 medium and 8 large sources for reduced staged work.
+- Diagnosed refused connections, capacity checks, timeout and route failures.
+- Collected source and results into p2p_full.tar.gz.
+- Prepared README, Makefile, performance analysis, plots and report.
+- Added current startup sequence and this recovered AI-assisted development log.
+
+2. HOUR-BUCKETED EXPERIMENT EVIDENCE
+Timezone: America/Chicago, UTC-05:00 on these dates. Original raw timestamps are
+UTC. These are machine-run events within an hour, NOT claimed labor durations.
+
+2026-09-27 14:00-14:59 CDT (19:00-19:59 UTC)
+  Three 10,000-request single-requester search runs, approx. 14:39-14:41.
+  Evidence: results/pilot_1peer_*_summary.csv.
+2026-09-27 16:00-16:59 CDT (21:00-21:59 UTC)
+  Three paired search trials, 10,000 requests per peer, approx. 16:42-16:59.
+  Evidence: results/pilot_2peers_*_summary.csv for both peers.
+2026-09-27 22:00-22:59 CDT (September 28 03:00-03:59 UTC)
+  Single-requester small-file transfer runs began around 22:53.
+2026-09-27 23:00-23:59 CDT (September 28 04:00-04:59 UTC)
+  Single-requester small-file runs finished around 23:01; concurrent small-file
+  runs followed around 23:19-23:28. Earlier reduced staged attempts also exist.
+  Evidence: pilot_transfer_1peer_* and auto_20260928T041658_762595Z/.
+2026-09-28 10:00-10:59 CDT (15:00-15:59 UTC)
+  Early attempts stopped for connectivity/capacity. Latest run recorded medium
+  transfers around 10:16-10:19, then large transfers around 10:20-10:33.
+  Third concurrent large trial on peer_a: one success, three failures.
+  Evidence: staged_20260928T151557_309964Z/ and prior staged directories.
+2026-09-28 15:00-15:59 CDT (20:00-20:59 UTC)
+  Uploaded project and requested requirement review, README and documentation.
+  Documentation task verified compilation and a local factor-2 binary smoke test.
+2026-09-28 16:00-16:59 CDT (21:00-21:59 UTC)
+  Requested startup sequence and ChatGPT development log; recovered historical
+  English record and assembled this file. No full-hour labor claim is made.
+
+3. RECOVERED USER PROMPT EXCERPTS
+The entries below preserve wording visible in available conversation excerpts.
+They are NOT a complete exported prompt history; exact message times are not
+available for most historical entries. They are grouped by task, not assigned
+invented hourly timestamps.
+
+Early implementation:
+  "translate and show me how to do it ?"
+  "可以先在一个vm上写代码吗？"
+  English meaning: Can I write the code on one VM first?
+  "please help to code from zero ?"
+  "show me py source code"
+  "是利用 TCP/IP 来互相通信吗？"
+  English meaning: Does it use TCP/IP to communicate?
+  "show updated download.py"
+  "peer number 1?"
+  "完成百分比？"
+  English meaning: What percentage is complete?
+  "还需要几个小时？"
+  English meaning: How many more hours are needed?
+  "两天到三天可以吗？"
+  English meaning: Can it be done in two to three days?
+
+Preservation and continuation:
+  "ok it is done. 我们完成了多少？"
+  "我要重新启动服务了。 请记得吧这个项目所有的我们的对话都保留下来"
+  English meaning: I will restart the services; please preserve all project chats.
+  "好的， 把上面的内容生产一个文本文件"
+  "最后的代码，你没有保留啊？"
+  "我要你提供跟我最新的source code"
+  "我们的chat ，要转成english， 并且保存为txt 文件"
+
+Benchmark collection and resource limits:
+  "whe nI have the files ,what is the next"
+  "11gb"
+  "ok, changed to 800 1m and 8  1g , try to do 1m and then remove all ,and then do 1g, please do in one time"
+  "ok please do with one command or one python command"
+  "vm1 reboot,how to restart"
+  "ubuntu , tar p2p"
+
+Current documentation requests (original wording):
+  "here is everything we have ,ready for submit."
+  "please help to privide readme and documenation ,please check the proj requirement"
+  "startup sequence and my chatgpt developer log"
+
+4. EARLIER PROMPTS AVAILABLE ONLY AS ENGLISH RECONSTRUCTION
+The appendix docs/recovered_chat_history.txt preserves the available narrative,
+including its User/Assistant entries. Its English prompts are translations or
+reconstructions and must not be labeled original verbatim messages. Examples:
+- Asked to use Python slowly, step by step, starting with one VM.
+- Requested English comments in all source code.
+- Asked to put addresses into configuration files and avoid hard-coded IPs.
+- Asked whether automatic replication was required by the assignment.
+- Reported registration timeouts and that UFW only allowed SSH.
+- Asked how to test and continue the implementation.
+- Requested service-restart instructions and code/chat preservation.
+The appendix also includes reported outputs and assistant explanations. Those
+are context and test evidence, not all user prompts.
+
+5. AI ASSISTANCE AND STUDENT VERIFICATION
+ChatGPT assisted requirement explanation, Python implementation examples,
+troubleshooting, VM/network setup guidance, replication, benchmark automation,
+result analysis and submission documentation. The user supplied VM terminal
+output, performed remote deployment/testing and uploaded the actual code/results.
+The current documentation pass checked Python syntax and ran a local loopback
+binary/replication test. It did not rerun the three-VM experiments.
+Do not claim authorship without AI assistance or claim failed tests passed.
+
+6. WHAT IS STILL NEEDED FOR THE HANDOUT'S COMPLETE LOG REQUIREMENT
+- Export or copy all original project ChatGPT messages/prompts, including code
+  revisions and follow-ups, and attach them in chronological order.
+- Add actual per-student active hours using real notes/git/terminal history.
+- Verify original timestamps and student names. Do not turn benchmark runtime
+  into invented working hours.
+This recovered record is useful supporting documentation but is not an exhaustive
+verbatim AI prompt export or a complete independently verified hourly timesheet.
