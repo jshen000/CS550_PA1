@@ -1,0 +1,32 @@
+CS550 PA#1 - Development log preparation
+Status: INCOMPLETE; student must complete before submission.
+
+This is an evidence-based scaffold, not an invented hourly history. Benchmark
+UTC timestamps below show runs occurred, not how long a person actively worked.
+Student/team names: add the actual names for this CS550 submission.
+
+RECOVERABLE EXPERIMENT EVENTS (UTC)
+2026-09-27 19:39-19:41: three single-requester search trials recorded.
+2026-09-27 21:42-21:59: three paired two-requester search trials recorded.
+2026-09-28 03:53-04:01: three single-requester small-transfer trials recorded.
+2026-09-28 04:19-04:28: concurrent small-transfer experiments recorded.
+2026-09-28 15:16-15:19: reduced 800-file medium-transfer experiments recorded.
+2026-09-28 15:20-15:33: large-file experiments; last concurrent trial failed.
+2026-09-28 documentation review: source/readiness review, local binary and
+factor-2 smoke test, README, Makefile, report, plots and requirement checklist.
+The exact active-work hours for this documentation task are not reconstructed.
+
+COMPLETE ONE ENTRY FOR EACH ACTUAL ACTIVE HOUR, PER TEAM MEMBER
+Date/time and timezone | Student | Activity | Files changed | Test/result
+Use notes, git history and terminal history to recover real entries. Do not
+substitute estimates presented as exact history.
+
+AI ASSISTANCE DISCLOSURE
+AI assisted this documentation review, Makefile, analysis/plots and report.
+Earlier code-generation prompts must be exported from the original chats.
+The following exact project-related prompts are visible in the current exchange:
+1. "here is everything we have ,ready for submit."
+2. "please help to privide readme and documenation ,please check the proj requirement"
+This is NOT the complete AI prompt history. Attach all original development
+prompts, including relevant follow-ups and code-revision requests. The provided
+source archive does not contain that complete history. Do not claim otherwise.

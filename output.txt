@@ -1,0 +1,38 @@
+Documentation verification: local loopback test, NOT the three-VM performance evaluation.
+
+$ python3 register.py --config /tmp/tmpmpo1nbhd/peer_b.json --no-replicate
+Registration complete: 0 files
+
+$ python3 register.py --config /tmp/tmpmpo1nbhd/peer_a.json
+Registration complete: 1 files
+Replication factor: 2
+Replicating smoke_binary.bin to peer_b...
+Files checked: 1
+Files below replication factor: 0
+
+$ python3 search.py --config /tmp/tmpmpo1nbhd/peer_b.json --file smoke_binary.bin --all-owners
+Peers holding 'smoke_binary.bin':
+  peer_a at 127.0.0.1:46837
+  peer_b at 127.0.0.1:39239
+
+$ python3 download.py --config /tmp/tmpmpo1nbhd/peer_b.json --file smoke_binary.bin --source-peer peer_a
+Downloading from peer_a at 127.0.0.1:46837
+Downloaded smoke_binary.bin: 65536 bytes
+Saved to: /tmp/tmpmpo1nbhd/peer_b/smoke_binary.bin
+display file 'smoke_binary.bin'
+Registered 'smoke_binary.bin' as peer_b at 127.0.0.1:39239
+
+$ python3 search.py --config /tmp/tmpmpo1nbhd/peer_b.json --file missing.bin
+No matching peers found for 'missing.bin'.
+
+PASS: factor-2 replication and explicit-source binary download match original bytes.
+SHA256: 7daca2095d0438260fa849183dfc67faa459fdf4936e1bc91eec6b281b27e4c2
+
+RECORDED VM LARGE-TRANSFER FAILURE EXCERPT
+Source: results/staged_20260928T151557_309964Z/reduced_1g_2peers_r3_peer_a_output.txt
+Downloaded staged_20260928T151557_309964Z_peer_b_1g_0000000.bin: 1073741824 bytes
+Saved to: /home/vboxuser/data/CS550/p2p/peer_a/shared/staged_20260928T151557_309964Z_peer_b_1g_0000000.bin
+display file 'staged_20260928T151557_309964Z_peer_b_1g_0000000.bin'
+Download failed: timed out
+Download failed: [Errno 113] No route to host
+Download failed: [Errno 113] No route to host

@@ -1,0 +1,5 @@
+{
+  "listen_host": "0.0.0.0",
+  "port": 9000,
+  "replication_factor": 1
+}

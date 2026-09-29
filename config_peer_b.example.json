@@ -1,0 +1,13 @@
+{
+  "index": {
+    "host": "10.0.2.6",
+    "port": 9000
+  },
+  "peer": {
+    "id": "peer_b",
+    "host": "10.0.2.15",
+    "listen_host": "0.0.0.0",
+    "port": 9002,
+    "shared_dir": "peer_b/shared"
+  }
+}

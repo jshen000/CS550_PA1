@@ -1,0 +1,34 @@
+Requirement review against cs550_pa1.docx (three pages)
+
+IMPLEMENTED / DOCUMENTED
+- Python sockets and threads; centralized metadata; exact lookup; direct obtain.
+- Concurrent handlers, index synchronization, text/binary byte transport.
+- Configurable replication implemented; small local factor-2 check passed.
+- readme.txt with structure, configuration, example commands and limitations.
+- Makefile added for Python compilation checks and launch commands.
+- output.txt and unmodified raw performance evidence included.
+- pa1-report.pdf with tables, performance figure and scalability discussion.
+
+REMAINING BEFORE CLAIMING FULL COMPLETION
+1. Medium study: required 1,000 x 1 MiB transfers; recorded study has 800 total.
+2. Large study: 8 files is the CORRECT requested transfer count. However, the
+   required resident dataset is 10 x 1 GiB per peer, while staged generation uses
+   8 per peer. Third two-requester trial has 1 success and 3 failures on peer_a.
+   Only two successful paired trials are usable; missing peer_b third-trial
+   evidence cannot be invented.
+3. Dataset: requirement is simultaneous 1M small + 1K medium + 10 large sources
+   per peer, all indexed in one shared directory. Reduced staged experiments
+   are not proof of that configuration. Datasets are not in this archive.
+4. Replication: benchmark metadata reports factor 2 but benchmark registration
+   bypasses replica enforcement. Do not call the large datasets factor-2 resilient.
+5. Screenshots: original three-VM terminal screenshots are absent. Add actual
+   screenshots of services, search/download, replication and benchmark summaries.
+   The report includes a plotted figure, not invented terminal screenshots.
+6. Development log: fill actual hourly work records and include ALL AI prompts.
+   A reconstruction from benchmark timestamps is not a complete development log.
+7. Confirm student/team names, Ubuntu version/hardware and git submission from
+   actual records. No student identity or deployment specification was invented.
+8. Confirm current Canvas deadline: the handout has conflicting year/date text.
+9. Source compilation and local functional verification passed during this review;
+   rerun on the target three VMs after any edits. Canvas/git submission has not
+   been performed by this documentation task.

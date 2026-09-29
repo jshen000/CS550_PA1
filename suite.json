@@ -1,0 +1,12 @@
+{
+  "local_project": "/home/vboxuser/CS550/p2p",
+  "local_config": "config.json",
+  "remote": {
+    "ssh_host": "10.0.2.15",
+    "ssh_user": "vboxuser",
+    "ssh_port": 22,
+    "project": "/home/vboxuser/CS550/p2p",
+    "config": "config.json",
+    "ssh_identity": "~/.ssh/cs550_test"
+  }
+}
